@@ -28,29 +28,42 @@ resource "aws_instance" "dww" {
   instance_type          = "t2.micro"
   vpc_security_group_ids = ["${aws_security_group.webserver_sg.id}"]
   key_name               = "mykey"
+  count                  = 3
   tags = {
     Name = "Ubuntu-Installation"
   }
-  provisioner "file" {
-    source = "script.sh"
-    destination = "/tmp/script.sh"
-  }
+#  provisioner "file" {
+#    source = "script.sh"
+#    destination = "/tmp/script.sh"
+#  }
+}
 
-  provisioner "remote-exec" {
-    inline = [
-      "chmod +x /tmp/script.sh",
-      "sudo sed -e -e 's/\r$//' /tmp/script.s.h", #remove the spurious CR characters
-      "sudo /tmp/script.sh",
-   ]
-  }
-  connection {
-    host        = coalesce(self.public_ip, self.private_ip)
-    type        = "ssh"
-    user        = var.INSTANCE_USERNAME
-    private_key = file(var.PATH_TO_PRIVATE_KEY)
+resource "aws_instance" "dwwamz" {
+  ami                     = "ami-04902260ca3d33422"
+  instance_type           = "t2.micro"
+  vpc_security_group_ids = ["${aws_security_group.webserver_sg.id}"]
+  key_name                = "mykey"
+  count                   = 2
+  tags = {
+    Name = "amazon-linux-installation"
   }
 }
-output "my-public-ip" {
-  value = aws_instance.dww.public_ip
-}
+
+#provisioner "remote-exec" {
+#    inline = [
+#      "chmod +x /tmp/script.sh",
+#      "sudo sed -e -e 's/\r$//' /tmp/script.s.h", #remove the spurious CR characters
+#      "sudo /tmp/script.sh",
+#   ]
+#  }
+#  connection {
+#    host        = coalesce(self.public_ip, self.private_ip)
+#    type        = "ssh"
+#    user        = var.INSTANCE_USERNAME
+#    private_key = file(var.PATH_TO_PRIVATE_KEY)
+#  }
+#}
+#output "my-public-ip" {
+#  value = aws_instance.dww.public_ip
+#}
 
