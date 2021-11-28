@@ -25,6 +25,10 @@ variable "PATH_TO_PRIVATE_KEY" {
   default = "/root/.ssh/mykey.pem"
 }
 
-variable "INSTANCE_USERNAME" {
+variable "INSTANCE_USERNAME_UBUNTU" {
   default = "ubuntu"
+}
+
+variable "INSTANCE_USERNAME_AMZAMI2" {
+  default = "ec2-user"
 }

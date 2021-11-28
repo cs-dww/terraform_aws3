@@ -49,6 +49,7 @@ resource "aws_instance" "dwwamz" {
   }
 }
 
+#NOTE: Add these in the block for the specific instance.  Create a 2nd block for Amazon within Amazon
 #provisioner "remote-exec" {
 #    inline = [
 #      "chmod +x /tmp/script.sh",
@@ -59,7 +60,7 @@ resource "aws_instance" "dwwamz" {
 #  connection {
 #    host        = coalesce(self.public_ip, self.private_ip)
 #    type        = "ssh"
-#    user        = var.INSTANCE_USERNAME
+#    user        = var.INSTANCE_USERNAME_UBTUNTU
 #    private_key = file(var.PATH_TO_PRIVATE_KEY)
 #  }
 #}
